@@ -12,7 +12,7 @@ place = st.text_input("Місто:(на любій мові) " , value="Киев
 
 days = st.slider('Прогноз на скільки днів', min_value=1, 
                  max_value=5, help='Обери період в днях')
-option = st.selectbox("Тепрература або погода?",
+option = st.selectbox("Темрература або погода?",
                       ('Температура','Погода'))
 
 
@@ -21,7 +21,7 @@ d, content_country, country = get_data(place, days)
 st.subheader(f'{option} на наступні {days} днів в {place}: країна{country}')   
 
 if option == 'Температура':
-    temp_line = [data["main"]["temp"] for data in content_country]
+    temp_line = [(int(data["main"]["temp"])-273.15) for data in content_country]
     figure = px.line(x=d, y=temp_line, labels={"x" : 'Data', "y": "Temperature C" })
     st.plotly_chart(figure)
 if option == 'Погода':
